@@ -10,6 +10,12 @@ export default function UserForm(){
     const params = useRoute<routeParam>();
 
     return(
-        <Text>{params.params?.name}</Text>
+        <>
+            <Text>{params.params?.name}</Text>
+            <Text>{params.params?.email}</Text>
+            <Text>{params.params?.avatarUrl}</Text>
+            <Text>{params.params?.id}</Text>
+        </>
+        
     )
 }
