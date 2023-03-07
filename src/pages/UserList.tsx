@@ -1,59 +1,69 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ListItem, Avatar } from "@rneui/base";
 import { View, FlatList, ListRenderItem, Alert } from "react-native";
-import users from "../data/users";
 import { useNavigation } from "@react-navigation/native";
 import { propsStack, propsNavigationStack } from "../TypeNav";
 import { Icon } from "@rneui/themed";
 import UsersContext from "../context/usersContext";
+import users from "../data/users";
+import apiCat from "../service/apiCat";
+import { ScrollView } from "react-native-gesture-handler";
 
 type usuarioTipo = {
-    id: number,
-    name: string,
-    email: string,
-    avatarUrl: string
+    id: string,
+    url: string,
+    height: number
 }
-
 
 export default function UserList(){
 
     const navigation = useNavigation<propsStack>();
 
-    useContext(UsersContext)
+    const [usuarios, setUsuarios] = useState<usuarioTipo[]>([{
+        id: "",
+        url: "",
+        height: 0,
+    }])
+
+    useEffect(()=>{
+        apiCat.get("").then(res => {
+            setUsuarios(res.data)
+        }).catch()
+    },[])
 
     //Caixa para modal
     function deleteUser(user:usuarioTipo){
-        Alert.alert("Excluir Usuário", "Você quer mesmo excluir o usuário: " + user.name + "?", [
+        Alert.alert("Excluir Usuário", "Você quer mesmo excluir o usuário: " + user.id + "?", [
             {
                 text: "Sim",
-                onPress(){
-                    console.warn("delete", user.id)
-                }
             },{
                 text: "Não"
             }
         ])
     }
 
-    const produtosTipado: ListRenderItem<usuarioTipo> = ({item:pessoa}) => (
-        <ListItem key={pessoa?.id} bottomDivider onPress={() => navigation.navigate("UserForm", {name: pessoa.name, id: pessoa.id, email: pessoa.email, avatarUrl: pessoa.avatarUrl})}>
-            <Avatar rounded source={{uri: pessoa?.avatarUrl}} />
+    const produtos = usuarios.map((item:usuarioTipo) => {
+        return(
+        <ListItem key={item?.id} bottomDivider onPress={() => navigation.navigate("UserForm", {url: item?.url, id: item?.id , height: item?.height})}>
+            <Avatar rounded source={{uri: item?.url || "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_960_720.png"}} />
             <ListItem.Content>
                 <ListItem.Title style={{ color: '#000'}}>
-                    {pessoa?.name}
+                    {item?.id}
                 </ListItem.Title>
                 <ListItem.Subtitle style={{ color: '#345cab90'}}>
-                        {pessoa?.email}
+                        {item?.height}
                 </ListItem.Subtitle>
             </ListItem.Content>
-            <Icon type="antdesign" name="edit" style={{padding: 8, borderRadius: 10}} color={"orange"} onPress={() => navigation.navigate("UserForm", {name: pessoa.name, id: pessoa.id, email: pessoa.email, avatarUrl: pessoa.avatarUrl})}/>
-            <Icon type="font-awesome" name="trash" style={{padding: 8, borderRadius: 10}} color={"red"} onPress={() => deleteUser(pessoa)} />
+            <Icon type="antdesign" name="edit" style={{padding: 8, borderRadius: 10}} color={"orange"} onPress={() => navigation.navigate("UserForm", {url: item?.url, id: item?.id , height: item?.height})}/>
+            <Icon type="font-awesome" name="trash" style={{padding: 8, borderRadius: 10}} color={"red"} onPress={() => deleteUser(item)} />
         </ListItem>
-    );
+        )
+    })
 
     return(
-        <View>
-            <FlatList renderItem={produtosTipado} data={users} />
-        </View>
+        <ScrollView>
+            {produtos}
+            {produtos}
+        </ScrollView>
     )
 }

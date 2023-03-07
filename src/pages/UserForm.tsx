@@ -31,24 +31,16 @@ export default function UserForm(){
 
     const params = useRoute<routeParam>();
 
-    const [name, setName] = useState(params.params?.name)
-    const [email, setEmail] = useState(params.params?.email)
-    const [avatarUrl, setAvatarUrl] = useState(params.params?.avatarUrl)
+    const [email, setEmail] = useState(params.params?.id)
+    const [avatarUrl, setAvatarUrl] = useState(params.params?.height)
 
-    const user = {
-        name: name,
-        email: email,
-        avatarUrl: avatarUrl
-    }
 
     return(
         <View style={styles.form}>
-            <Text style={styles.title}>Name</Text>
-            <TextInput style={styles.input} onChangeText={name => setName(name)} value={name} placeholder="Informe o Nome" />
-            <Text style={styles.title} >Email</Text>
-            <TextInput style={styles.input} onChangeText={email => setEmail(email)} value={email} placeholder="Informe o seu Email" />
-            <Text style={styles.title} >Avatar</Text>
-            <TextInput style={styles.input} onChangeText={url => setAvatarUrl(url)} value={avatarUrl} placeholder="Informe a URL do seu Avatar" />
+            <Text style={styles.title} >Estado</Text>
+            <TextInput style={styles.input} onChangeText={email => setEmail(email)} value={email} placeholder="Informe o Estado" />
+            <Text style={styles.title} >Quantidade</Text>
+            <TextInput keyboardType={"numeric"} style={styles.input} onChangeText={number => setAvatarUrl(parseFloat(number))} value={avatarUrl?.toString()} placeholder="Informe o UF" />
             <Button title="Salvar" onPress={()=>navigation.goBack()}/>
         </View>
         
