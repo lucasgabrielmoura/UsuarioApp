@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ListItem, Avatar } from "@rneui/base";
 import { View, FlatList, ListRenderItem, Alert } from "react-native";
 import users from "../data/users";
 import { useNavigation } from "@react-navigation/native";
 import { propsStack, propsNavigationStack } from "../TypeNav";
 import { Icon } from "@rneui/themed";
+import UsersContext from "../context/usersContext";
 
 type usuarioTipo = {
     id: number,
@@ -18,6 +19,7 @@ export default function UserList(){
 
     const navigation = useNavigation<propsStack>();
 
+    useContext(UsersContext)
 
     //Caixa para modal
     function deleteUser(user:usuarioTipo){
