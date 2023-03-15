@@ -15,14 +15,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <Login/>
-  );
-}
-
-
-//Isso Estava no Return
-
-{/* <UsersProvider>
+    <UsersProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='UserList' screenOptions={{
           headerStyle:{
@@ -42,5 +35,10 @@ export default function App() {
           <Stack.Screen name='UserForm' component={UserForm} options={{title: "Formulário de Usuários"}} />
         </Stack.Navigator>
       </NavigationContainer>
-    </UsersProvider> 
-*/}
+    </UsersProvider>
+  );
+}
+
+
+//Isso Estava no Return
+

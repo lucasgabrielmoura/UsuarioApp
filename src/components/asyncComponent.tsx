@@ -24,22 +24,15 @@ const App = () => {
   const [getValue, setGetValue] = useState('');
 
   const saveValueFunction = () => {
-    //function to save the value in AsyncStorage
     if (textInputValue) {
-      //To check the input not empty
       AsyncStorage.setItem('any_key_here', textInputValue);
-      //Setting a data to a AsyncStorage with respect to a key
       setTextInputValue('');
-      //Resetting the TextInput
-      alert('Data Saved');
-      //alert to confirm
     } else {
       alert('Please fill data');
-      //alert for the empty InputText
     }
   };
 
-  const getValueFunction = () => {
+  const getValueFunction = async () => {
     //function to get the value from AsyncStorage
     AsyncStorage.getItem('any_key_here').then(
       (value) => {
@@ -48,7 +41,7 @@ const App = () => {
         console.log(value)
         //Setting the value in Text
       }
-    );
+    )
   };
 
   return (
