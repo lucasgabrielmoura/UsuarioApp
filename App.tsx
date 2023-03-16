@@ -8,14 +8,21 @@ import UserForm from './src/pages/UserForm';
 import { Button, Icon } from '@rneui/base';
 import { propsNavigationStack, propsStack } from './src/TypeNav';
 import { UsersProvider } from './src/context/usersContext';
-import Login from './src/components/asyncComponent';
+import Login from './src/pages/Login';
 
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <UsersProvider>
+    <Login/>
+  );
+}
+
+
+//Isso Estava no Return
+
+{/* <UsersProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='UserList' screenOptions={{
           headerStyle:{
@@ -33,12 +40,7 @@ export default function App() {
             }
           }} />
           <Stack.Screen name='UserForm' component={UserForm} options={{title: "Formulário de Usuários"}} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UsersProvider>
-  );
-}
-
-
-//Isso Estava no Return
+    </Stack.Navigator>
+  </NavigationContainer>
+</UsersProvider> */}
 
